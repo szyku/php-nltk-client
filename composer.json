@@ -1,0 +1,33 @@
+{
+    "name": "szyku/php-nltk-client",
+    "description": "PHP client implementation for szyku/nltk-api",
+    "type": "library",
+    "require": {
+        "php" : "^5.5 || ^7.0",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.0"
+    },
+    "config": {
+      "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Szyku\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Szyku\\": "tests/"
+        }
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/szyku/nltk-api",
+    "authors": [
+        {
+            "name": "Szymon Szymański",
+            "email": "szymon.szymanski@hotmail.com"
+        }
+    ]
+}
