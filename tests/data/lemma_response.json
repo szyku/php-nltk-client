@@ -1,0 +1,32 @@
+{
+  "query": [
+    {
+      "partOfSpeech": "all",
+      "word": "working"
+    }
+  ],
+  "results": [
+    {
+      "result": [
+        {
+          "lemma": "working",
+          "partOfSpeech": "adjective"
+        },
+        {
+          "lemma": "work",
+          "partOfSpeech": "verb"
+        },
+        {
+          "lemma": "working",
+          "partOfSpeech": "noun"
+        },
+        {
+          "lemma": "working",
+          "partOfSpeech": "adverb"
+        }
+      ],
+      "word": "working"
+    }
+  ],
+  "time": 0.00021886825561523438
+}
