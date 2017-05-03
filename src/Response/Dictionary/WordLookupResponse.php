@@ -8,7 +8,6 @@
 namespace Szyku\NLTK\Response\Dictionary;
 
 
-
 use Szyku\NLTK\Response\NltkResponse;
 
 class WordLookupResponse extends NltkResponse
@@ -39,6 +38,14 @@ class WordLookupResponse extends NltkResponse
     public function queriedPhrase()
     {
         return $this->word;
+    }
+
+    /**
+     * @return Definition[]
+     */
+    public function results()
+    {
+        return $this->results;
     }
 
 

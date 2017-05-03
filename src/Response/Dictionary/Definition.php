@@ -50,7 +50,7 @@ final class Definition
     }
 
     /**
-     * @return string
+     * @return PartOfSpeech
      */
     public function partOfSpeech()
     {

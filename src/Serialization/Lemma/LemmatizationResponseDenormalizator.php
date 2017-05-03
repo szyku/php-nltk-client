@@ -11,6 +11,7 @@ namespace Szyku\NLTK\Serialization\Lemma;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Szyku\NLTK\Common\PartOfSpeech;
+use Szyku\NLTK\Exception\UnexpectedResponseFormatException;
 use Szyku\NLTK\Request\Lemma\LemmaPosFilter;
 use Szyku\NLTK\Request\Lemma\WordLemmatization;
 use Szyku\NLTK\Response\Lemma\Lemma;
@@ -25,6 +26,9 @@ final class LemmatizationResponseDenormalizator implements DenormalizerInterface
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
+        if (!isset($data['query'], $data['results'], $data['time'])) {
+            throw new UnexpectedResponseFormatException('The response\'s root misses some fields.');
+        }
 
         $queryPart = $this->processQueryPart($data);
         $resultPart = $this->processResultPart($data);
@@ -48,6 +52,10 @@ final class LemmatizationResponseDenormalizator implements DenormalizerInterface
     {
         $queryPart = [];
         foreach ($data['query'] as $queryReq) {
+            if (!isset($queryReq['partOfSpeech'], $queryReq['word'])) {
+                throw new UnexpectedResponseFormatException("A query entry misses some fields.");
+            }
+
             if (!LemmaPosFilter::has($queryReq['partOfSpeech'])) {
                 throw new UnexpectedValueException(sprintf(
                     'Query\'s partOfSpeech attribute has an unrecognized value (%s).', $queryPart['partOfSpeech']
@@ -64,6 +72,10 @@ final class LemmatizationResponseDenormalizator implements DenormalizerInterface
     {
         $resultPart = [];
         foreach ($data['results'] as $result) {
+            if (!isset($result['result'], $result['word'])) {
+                throw new UnexpectedResponseFormatException("Lemma response item misses some fields.");
+            }
+
             $lemmas = $this->extractLemmas($result['result']);
             $word = $result['word'];
             $resultPart[] = new LemmaResult($word, $lemmas);
@@ -93,6 +105,10 @@ final class LemmatizationResponseDenormalizator implements DenormalizerInterface
 
     private function forgeLemma($data)
     {
+        if (!isset($data['partOfSpeech'], $data['lemma'])) {
+            throw new UnexpectedResponseFormatException("Lemma item misses some fields.");
+        }
+
         if (!PartOfSpeech::has($data['partOfSpeech'])) {
             throw new UnexpectedValueException('Lemma\'s partOfSpeech attribute has an unrecognized value.');
         }

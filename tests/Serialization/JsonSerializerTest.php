@@ -11,6 +11,8 @@ use Szyku\NLTK\Common\PartOfSpeech;
 use Szyku\NLTK\Request\Lemma\LemmaPosFilter;
 use Szyku\NLTK\Request\Lemma\LemmatizationRequestBuilder;
 use Szyku\NLTK\Request\Lemma\WordLemmatization;
+use Szyku\NLTK\Response\Dictionary\Definition;
+use Szyku\NLTK\Response\Dictionary\WordLookupResponse;
 use Szyku\NLTK\Response\Lemma\Lemma;
 use Szyku\NLTK\Response\Lemma\LemmaResult;
 use Szyku\NLTK\Response\Lemma\LemmatizationResponse;
@@ -18,6 +20,7 @@ use Szyku\NLTK\Serialization\JsonSerializer;
 
 class JsonSerializerTest extends \PHPUnit_Framework_TestCase
 {
+    use File;
     /** @var JsonSerializer */
     private static $serializer;
 
@@ -42,14 +45,14 @@ class JsonSerializerTest extends \PHPUnit_Framework_TestCase
 
         $actual = self::$serializer->serialize($request);
         $this->assertJsonStringEqualsJsonFile(
-            __DIR__ . '/data/obese_cat_expected.json',
+            $this->forgeFilePath('obese_cat_expected'),
             $actual
         );
     }
 
     public function testLemmatizationResponseDeserialization()
     {
-        $source = file_get_contents(__DIR__ . '/data/lemmatization_api_response.json');
+        $source = file_get_contents($this->forgeFilePath('lemmatization_api_response'));
         /** @var LemmatizationResponse $actual */
         $actual = self::$serializer->deserialize($source, LemmatizationResponse::class);
 
@@ -62,6 +65,22 @@ class JsonSerializerTest extends \PHPUnit_Framework_TestCase
 
     public function testDictionaryResponse()
     {
+        $source = file_get_contents($this->forgeFilePath('word_lookup_response'));
+        /** @var WordLookupResponse $actual */
+        $actual = self::$serializer->deserialize($source, WordLookupResponse::class);
+
+        $this->assertInstanceOf(WordLookupResponse::class, $actual);
+
+        $this->assertSame('savage', $actual->queriedPhrase());
+        /** @var Definition $result */
+        foreach ($actual->results() as $result) {
+            $this->assertInstanceOf(Definition::class, $result);
+            $this->assertInstanceOf(PartOfSpeech::class, $result->partOfSpeech());
+            $this->assertInternalType('string', $result->phrase());
+            $this->assertInternalType('string', $result->definition());
+            $this->assertNotEmpty($result->phrase());
+            $this->assertNotEmpty($result->definition());
+        }
     }
 
     /**
