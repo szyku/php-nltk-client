@@ -1,0 +1,54 @@
+{
+  "query": [
+    {
+      "partOfSpeech": "noun",
+      "word": "cupcakes"
+    },
+    {
+      "partOfSpeech": "verb",
+      "word": "jogging"
+    },
+    {
+      "partOfSpeech": "all",
+      "word": "working"
+    }
+  ],
+  "results": [
+    {
+      "result": {
+        "lemma": "cupcake",
+        "partOfSpeech": "noun"
+      },
+      "word": "cupcakes"
+    },
+    {
+      "result": {
+        "lemma": "jog",
+        "partOfSpeech": "verb"
+      },
+      "word": "jogging"
+    },
+    {
+      "result": [
+        {
+          "lemma": "working",
+          "partOfSpeech": "adjective"
+        },
+        {
+          "lemma": "work",
+          "partOfSpeech": "verb"
+        },
+        {
+          "lemma": "working",
+          "partOfSpeech": "noun"
+        },
+        {
+          "lemma": "working",
+          "partOfSpeech": "adverb"
+        }
+      ],
+      "word": "working"
+    }
+  ],
+  "time": 0.00021886825561523438
+}

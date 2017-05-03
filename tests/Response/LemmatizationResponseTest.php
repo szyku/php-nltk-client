@@ -11,7 +11,7 @@ use Szyku\NLTK\Request\Lemma\LemmaPosFilter;
 use Szyku\NLTK\Request\Lemma\WordLemmatization;
 use Szyku\NLTK\Response\Lemma\LemmatizationResponse;
 
-class LemmatizationLookupResponseTest extends \PHPUnit_Framework_TestCase
+class LemmatizationResponseTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -19,7 +19,7 @@ class LemmatizationLookupResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructingWithWrongQueryElements()
     {
-        new LemmatizationResponse(['not good param'], []);
+        new LemmatizationResponse(['not good param'], [], 0);
     }
 
     /**
@@ -29,7 +29,8 @@ class LemmatizationLookupResponseTest extends \PHPUnit_Framework_TestCase
     {
         new LemmatizationResponse(
             [new WordLemmatization("some str", LemmaPosFilter::NOUN())],
-            ["not good result"]
+            ["not good result"],
+            0
         );
     }
 

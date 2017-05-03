@@ -17,6 +17,6 @@ class WordLemmatizationTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructingException()
     {
-        new WordLemmatization('', POS::NOUN());
+        new WordLemmatization('', POS::NOUN(), 0);
     }
 }

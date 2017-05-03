@@ -24,8 +24,9 @@ class LemmatizationResponse extends NltkResponse implements \IteratorAggregate
      * @param WordLemmatization[] $query
      * @param LemmaResult[] $results
      */
-    public function __construct(array $query, array $results)
+    public function __construct(array $query, array $results, $time)
     {
+        parent::__construct($time);
         Assertion::allIsInstanceOf($query, WordLemmatization::class, sprintf(
             "Query should contain only %s objects.", WordLemmatization::class
         ));
@@ -39,7 +40,7 @@ class LemmatizationResponse extends NltkResponse implements \IteratorAggregate
     /**
      * @return WordLemmatization[]
      */
-    public function getQuery()
+    public function query()
     {
         return $this->query;
     }
@@ -47,7 +48,7 @@ class LemmatizationResponse extends NltkResponse implements \IteratorAggregate
     /**
      * @return LemmaResult[]
      */
-    public function getResults()
+    public function results()
     {
         return $this->results;
     }

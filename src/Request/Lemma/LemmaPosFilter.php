@@ -18,4 +18,5 @@ final class LemmaPosFilter extends Enum
     const ADJ = PartOfSpeech::ADJ;
     const ADV = PartOfSpeech::ADV;
     const ALL = 'all';
+
 }

@@ -8,9 +8,22 @@
 namespace Szyku\NLTK\Response;
 
 
+use Szyku\NLTK\Assertion\Assertion;
+
 abstract class NltkResponse
 {
     private $time;
+
+    /**
+     * NltkResponse constructor.
+     * @param $time float
+     */
+    public function __construct($time)
+    {
+        Assertion::float($time);
+        $this->time = $time;
+    }
+
 
     /**
      * @return mixed

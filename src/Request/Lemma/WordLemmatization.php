@@ -36,7 +36,7 @@ final class WordLemmatization
     /**
      * @return string
      */
-    public function getWord()
+    public function word()
     {
         return $this->word;
     }
@@ -44,7 +44,7 @@ final class WordLemmatization
     /**
      * @return LemmaPosFilter
      */
-    public function getPartOfSpeech()
+    public function partOfSpeech()
     {
         return $this->partOfSpeech;
     }

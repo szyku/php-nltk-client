@@ -25,8 +25,9 @@ class WordLookupResponse extends NltkResponse
      * @param string $queriedPhrase
      * @param Definition[] $results
      */
-    public function __construct($queriedPhrase, array $results)
+    public function __construct($queriedPhrase, array $results, $time)
     {
+        parent::__construct($time);
         $this->word = $queriedPhrase;
         $this->results = $results;
     }

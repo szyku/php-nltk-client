@@ -18,8 +18,14 @@ build: composer
 composer:
 	@docker run --rm -v $(APP_DIR):/app $(COMPOSER_IMG) install --no-interaction
 
+composer_update:
+	@docker run --rm -v $(APP_DIR):/app $(COMPOSER_IMG) update $(ARGS)
+
 composer_require:
 	@docker run --rm -v $(APP_DIR):/app $(COMPOSER_IMG) require $(ARGS)
+
+composer_remove:
+	@docker run --rm -v $(APP_DIR):/app $(COMPOSER_IMG) remove $(ARGS)
 
 unit:
 	@docker run -it --rm -v $(APP_DIR):/usr/src/lib -w /usr/src/lib php:5.6-cli bin/phpunit
