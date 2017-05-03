@@ -8,6 +8,7 @@
 namespace Szyku\NLTK;
 
 
+use Szyku\NLTK\Exception\NltkClientServiceException;
 use Szyku\NLTK\Request\Dictionary\WordLookupRequest;
 use Szyku\NLTK\Request\Lemma\LemmatizationRequest;
 use Szyku\NLTK\Response\Dictionary\WordLookupResponse;
@@ -21,6 +22,7 @@ interface NltkClient
      *
      * @param WordLookupRequest $request
      * @return WordLookupResponse
+     * @throws NltkClientServiceException If anything goes wrong.
      */
     public function dictionary(WordLookupRequest $request);
 
@@ -29,6 +31,7 @@ interface NltkClient
      *
      * @param LemmatizationRequest $request
      * @return LemmatizationResponse
+     * @throws NltkClientServiceException If anything goes wrong.
      */
     public function lemmatization(LemmatizationRequest $request);
 }

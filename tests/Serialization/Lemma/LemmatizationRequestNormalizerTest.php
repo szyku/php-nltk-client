@@ -32,6 +32,8 @@ class LemmatizationRequestNormalizerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->getExpectedNormalizedArray(), $actual);
 
     }
+    
+    
 
 
     private function getExpectedNormalizedArray()
@@ -45,6 +47,26 @@ class LemmatizationRequestNormalizerTest extends \PHPUnit_Framework_TestCase
         $word2->partOfSpeech = 'verb';
 
         return [$word1, $word2];
+    }
+
+    public function testIfPhrasesAreNormalizedForApi()
+    {
+        $normalizer = new LemmatizationRequestNormalizer();
+
+        $req = new LemmatizationRequest(
+            [
+                new WordLemmatization("    look up   ", LemmaPosFilter::VERB()),
+            ]
+        );
+
+        $this->assertTrue($normalizer->supportsNormalization($req, 'json'));
+        $actual = $normalizer->normalize($req);
+
+        $lookup = new \stdClass();
+        $lookup->word = 'look_up';
+        $lookup->partOfSpeech = 'verb';
+
+        $this->assertEquals([$lookup], $actual);
     }
 
     public function testEmptyLemmatizationRequestNormalization()

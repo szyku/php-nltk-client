@@ -40,7 +40,7 @@ class JsonSerializer
 
     /**
      * Serialized objects to JSON string.
-     * @param $object Object to serialize.
+     * @param $object mixed Object to serialize.
      * @return string JSON representation of the $object.
      */
     public function serialize($object)

@@ -11,6 +11,7 @@ namespace Szyku\NLTK\Serialization\Lemma;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Szyku\NLTK\Request\Lemma\LemmatizationRequest;
 use Szyku\NLTK\Request\Lemma\WordLemmatization;
+use Szyku\NLTK\Util\PhraseNormalization;
 
 final class LemmatizationRequestNormalizer implements NormalizerInterface
 {
@@ -25,7 +26,7 @@ final class LemmatizationRequestNormalizer implements NormalizerInterface
         /** @var WordLemmatization $wordLemmatization */
         foreach ($object as $wordLemmatization) {
             $entry = new \stdClass();
-            $entry->word = $wordLemmatization->word();
+            $entry->word = PhraseNormalization::normalizeForApi($wordLemmatization->word());
             $entry->partOfSpeech = $wordLemmatization->partOfSpeech()->getValue();
             $data[] = $entry;
         }
