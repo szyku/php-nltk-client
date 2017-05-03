@@ -32,9 +32,9 @@ abstract class WordLookupRequest
         $this->partOfSpeech = $partOfSpeech;
     }
 
-    public static function phrase($phrase)
+    public static function phrase($phrase, PosFilter $filter = null)
     {
-        return new static($phrase);
+        return new static($phrase, $filter);
     }
 
     public static function noun($phrase)

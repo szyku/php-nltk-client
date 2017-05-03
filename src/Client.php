@@ -34,12 +34,11 @@ class Client implements NltkClient
     /**
      * Client constructor.
      * @param ClientInterface $httpClient
-     * @param JsonSerializer $serializer
      */
-    public function __construct(ClientInterface $httpClient, JsonSerializer $serializer)
+    public function __construct(ClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
-        $this->serializer = $serializer;
+        $this->serializer = new JsonSerializer();
     }
 
 

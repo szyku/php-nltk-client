@@ -19,7 +19,6 @@ use Szyku\NLTK\Request\Dictionary\SimilarLookupRequest;
 use Szyku\NLTK\Request\Lemma\LemmatizationRequestBuilder;
 use Szyku\NLTK\Response\Dictionary\WordLookupResponse;
 use Szyku\NLTK\Response\Lemma\LemmatizationResponse;
-use Szyku\NLTK\Serialization\JsonSerializer;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -117,9 +116,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $stack->push(Middleware::history($this->history));
         $uri = new Uri('http://localhost:5000');
         $guzzleClient = new \GuzzleHttp\Client(['handler' => $stack, 'base_uri' => $uri]);
-        $serializer = new JsonSerializer();
 
-        return new Client($guzzleClient, $serializer);
+        return new Client($guzzleClient);
     }
 
 }
