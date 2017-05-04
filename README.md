@@ -6,6 +6,8 @@ The aim of this client is to provide a comfortable and intuitive way of interact
 
 ## Installation
 
+This package was tested for PHP >= 5.6.
+
 Composer:
 ```bash
 composer require szyku/php-nltk-client
