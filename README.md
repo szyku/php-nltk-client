@@ -65,7 +65,7 @@ $lemmatizeSentence = Builder::create()
     ->findAllFor('at')
     ->build();
 
-// results are hydrated to objects like WordLookupRequest or LemmatizationResponse
+// results are hydrated to objects like WordLookupResponse or LemmatizationResponse
 $castleResult = $nltkClient->dictionary($similarWordsToCastle);
 $raResult = $nltkClient->dictionary($definitionsForRA);
 $lemmatizationResult = $nltkClient->lemmatization($lemmatizeSentence);
