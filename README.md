@@ -55,4 +55,5 @@ echo "Searched for: " . $castleResult->queriedPhrase();
 foreach ($castleResult->results() as $result) {
     echo $result->phrase() . ": " . $result->definition();
 }
+// prints "palace: A large and stately mansion"
 ```
