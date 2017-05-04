@@ -6,7 +6,26 @@ The aim of this client is to provide a comfortable and intuitive way of interact
 
 ## Installation
 
-Coming soon...
+Composer:
+```bash
+composer require szyku/php-nltk-client
+```
+
+Git clone:
+```bash
+git clone git@github.com:szyku/php-nltk-client.git
+```
+
+Or download zip:
+```bash
+wget https://github.com/szyku/php-nltk-client/archive/master.zip 
+```
+
+Or tarball:
+
+```bash
+wget https://github.com/szyku/php-nltk-client/archive/master.tar.gz
+```
 
 ## How to use it
 
