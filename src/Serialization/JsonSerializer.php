@@ -15,6 +15,7 @@ use Szyku\NLTK\Exception\UnexpectedResponseFormatException;
 use Szyku\NLTK\Serialization\Dictionary\WordLookupResponseDenormalizer;
 use Szyku\NLTK\Serialization\Lemma\LemmatizationRequestNormalizer;
 use Szyku\NLTK\Serialization\Lemma\LemmatizationResponseDenormalizator;
+use Szyku\NLTK\Serialization\Tagger\TaggingRequestNormalizer;
 
 class JsonSerializer
 {
@@ -32,7 +33,8 @@ class JsonSerializer
             [
                 new LemmatizationRequestNormalizer(),
                 new LemmatizationResponseDenormalizator(),
-                new WordLookupResponseDenormalizer()
+                new WordLookupResponseDenormalizer(),
+                new TaggingRequestNormalizer(),
             ],
             [new JsonEncoder()]
         );

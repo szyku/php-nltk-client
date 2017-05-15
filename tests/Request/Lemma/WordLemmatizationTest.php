@@ -5,7 +5,7 @@
  * Time: 20:04
  */
 
-namespace Tests\Szyku\NLTK\Request;
+namespace Tests\Szyku\NLTK\Request\Lemma;
 
 use Szyku\NLTK\Request\Lemma\LemmaPosFilter as POS;
 use Szyku\NLTK\Request\Lemma\WordLemmatization;
