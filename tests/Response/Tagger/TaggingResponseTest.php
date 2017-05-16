@@ -37,13 +37,13 @@ class TaggingResponseTest extends \PHPUnit_Framework_TestCase
             [
                 [1231231],
                 [[new Part('', ExtendedPartOfSpeech::W_ADV())]],
-                0,
+                0.0,
                 'Input must be an array of strings.'
             ],
             [
                 ["Adsad"],
                 [[new Part('', ExtendedPartOfSpeech::W_ADV()), 3]],
-                0,
+                0.0,
                 'The parts array must contain only objects of class ' . Part::class . '.',
             ],
             [

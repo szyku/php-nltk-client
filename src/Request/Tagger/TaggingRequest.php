@@ -25,6 +25,11 @@ final class TaggingRequest
         $this->sentences = $sentences;
     }
 
+    public static function create(array $sentences)
+    {
+        return new self($sentences);
+    }
+
     /**
      * @return array
      */

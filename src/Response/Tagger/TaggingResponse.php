@@ -9,17 +9,15 @@ namespace Szyku\NLTK\Response\Tagger;
 
 
 use Szyku\NLTK\Assertion\Assertion;
+use Szyku\NLTK\Response\NltkResponse;
 
-final class TaggingResponse
+final class TaggingResponse extends NltkResponse
 {
     /** @var array */
     private $input = [];
 
     /** @var array */
     private $parts = [];
-
-    /** @var float */
-    private $time;
 
     /**
      * TaggingResponse constructor.
@@ -28,15 +26,14 @@ final class TaggingResponse
      */
     public function __construct(array $input, array $parts, $time)
     {
+        parent::__construct($time);
         Assertion::allString($input, 'Input must be an array of strings.');
         foreach ($parts as $collection) {
             Assertion::allIsInstanceOf($collection, Part::class,
                 sprintf('The parts array must contain only objects of class %s.', Part::class));
         }
-        Assertion::float($time, 'Time must be float type');
         $this->input = $input;
         $this->parts = $parts;
-        $this->time = $time;
     }
 
     /**

@@ -12,6 +12,12 @@ use MabeEnum\Enum;
 use Szyku\NLTK\Assertion\Assertion;
 use Szyku\NLTK\Exception\NltkClientServiceException;
 
+/**
+ * Represents Penn's parts of speech
+ * @link https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html Penn Treebank
+ * Class ExtendedPartOfSpeech
+ * @package Szyku\NLTK\Response\Tagger
+ */
 class ExtendedPartOfSpeech extends Enum
 {
     const DOLLAR = '$';
@@ -164,5 +170,15 @@ class ExtendedPartOfSpeech extends Enum
         }
 
         throw new NltkClientServiceException(sprintf("Key %s not recognized.", $key));
+    }
+
+    public function token()
+    {
+        return $this->getValue();
+    }
+
+    public function humanizedString()
+    {
+        return self::$map[$this->getValue()];
     }
 }

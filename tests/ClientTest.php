@@ -49,6 +49,17 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('I', $segment->item());
         $this->assertInstanceOf(ExtendedPartOfSpeech::class, $segment->partOfSpeech());
         $this->assertTrue($segment->partOfSpeech()->is(ExtendedPartOfSpeech::PRO_PERSON()));
+
+        $this->assertCount(1, $this->history);
+
+        /** @var Request $madeRequest */
+        $madeRequest = $this->history[0]['request'];
+
+        $this->assertSame('POST', $madeRequest->getMethod());
+        $reqUri = $madeRequest->getUri();
+        $this->assertSame('localhost', $reqUri->getHost());
+        $this->assertSame(5000, $reqUri->getPort());
+        $this->assertSame('/tagger', $reqUri->getPath());
     }
 
     public function testDictionaryLookupForDefinition()

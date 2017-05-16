@@ -20,7 +20,7 @@ abstract class NltkResponse
      */
     public function __construct($time)
     {
-        Assertion::float($time);
+        Assertion::float($time, 'Time must be float type');
         $this->time = $time;
     }
 
