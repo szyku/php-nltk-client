@@ -16,6 +16,7 @@ use Szyku\NLTK\Serialization\Dictionary\WordLookupResponseDenormalizer;
 use Szyku\NLTK\Serialization\Lemma\LemmatizationRequestNormalizer;
 use Szyku\NLTK\Serialization\Lemma\LemmatizationResponseDenormalizator;
 use Szyku\NLTK\Serialization\Tagger\TaggingRequestNormalizer;
+use Szyku\NLTK\Serialization\Tagger\TaggingResponseDenormalizator;
 
 class JsonSerializer
 {
@@ -35,6 +36,7 @@ class JsonSerializer
                 new LemmatizationResponseDenormalizator(),
                 new WordLookupResponseDenormalizer(),
                 new TaggingRequestNormalizer(),
+                new TaggingResponseDenormalizator(),
             ],
             [new JsonEncoder()]
         );

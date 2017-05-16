@@ -12,7 +12,7 @@ use MabeEnum\Enum;
 use Szyku\NLTK\Assertion\Assertion;
 use Szyku\NLTK\Exception\NltkClientServiceException;
 
-class PartOfSpeech extends Enum
+class ExtendedPartOfSpeech extends Enum
 {
     const DOLLAR = '$';
     const QUOTE_CLOSE = "''";
@@ -116,7 +116,7 @@ class PartOfSpeech extends Enum
     {
         Assertion::keyExists(self::$map, $symbol, 'Symbol not recognized.');
 
-        return self::byName($symbol);
+        return self::byValue($symbol);
     }
 
     /**
@@ -128,7 +128,7 @@ class PartOfSpeech extends Enum
         Assertion::inArray($description, self::$map, 'Description not recognized.');
         $symbolKey = array_search($description, self::$map);
 
-        return self::byName($symbolKey);
+        return self::byValue($symbolKey);
     }
 
     /**
@@ -152,15 +152,15 @@ class PartOfSpeech extends Enum
     /**
      * @param $key
      */
-    public static function create($key)
+    public static function createFromKey($key)
     {
         Assertion::string($key, "The key must be string type");
         if (self::isSymbolicKey($key)) {
-
+            return self::fromSymbol($key);
         }
 
         if (self::isDescriptiveKey($key)) {
-
+            return self::fromDescription($key);
         }
 
         throw new NltkClientServiceException(sprintf("Key %s not recognized.", $key));

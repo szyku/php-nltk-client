@@ -17,6 +17,7 @@ use Szyku\NLTK\Exception\NltkClientServiceException;
 use Szyku\NLTK\Exception\UnexpectedResponseFormatException;
 use Szyku\NLTK\Request\Dictionary\DefinitionLookupRequest;
 use Szyku\NLTK\Request\Lemma\LemmatizationRequestBuilder;
+use Szyku\NLTK\Request\Tagger\TaggingRequest;
 use Tests\Szyku\NLTK\ClientTest as BaseTest;
 
 class ClientExceptionTest extends BaseTest
@@ -35,6 +36,28 @@ class ClientExceptionTest extends BaseTest
         $exception = null;
         try {
             $client->dictionary(DefinitionLookupRequest::phrase('error'));
+        } catch (\Exception $e) {
+            $exception = $e;
+        }
+        $this->assertInstanceOf($primaryExpectedException, $exception);
+        $this->assertNotNull($exception, $assertionMsg);
+        $this->assertInstanceOf($expectedPreviousException, $exception->getPrevious(), $assertionMsg);
+    }
+
+    /**
+     * @dataProvider serverInteractionProvider
+     */
+    public function testConnectionTaggerErrors(
+        $primaryExpectedException,
+        $expectedPreviousException,
+        $response,
+        $assertionMsg
+    ) {
+        $client = $this->createClient(MockHandler::createWithMiddleware([$response]));
+
+        $exception = null;
+        try {
+            $client->tagging(new TaggingRequest(['ddsd asdasdasd']));
         } catch (\Exception $e) {
             $exception = $e;
         }

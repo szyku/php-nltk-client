@@ -11,7 +11,9 @@ namespace Szyku\NLTK\Serialization\Tagger;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Szyku\NLTK\Assertion\Assertion;
 use Szyku\NLTK\Exception\UnexpectedResponseFormatException;
-use Szyku\NLTK\Response\Tagger\PartOfSpeech;
+use Szyku\NLTK\Response\Tagger\ExtendedPartOfSpeech;
+use Szyku\NLTK\Response\Tagger\Part;
+use Szyku\NLTK\Response\Tagger\TaggingResponse;
 
 final class TaggingResponseDenormalizator implements DenormalizerInterface
 {
@@ -28,12 +30,16 @@ final class TaggingResponseDenormalizator implements DenormalizerInterface
         Assertion::allString($data['input'], 'Property `input` has unexpected data.');
         Assertion::float($data['time'], 'Property `time` should be of type float.');
 
-        $elements = [];
-        foreach ($data['results'] as $result) {
-            $elements[] = $this->hydrateElement($result);
+        $collection = [];
+        foreach ($data['results'] as $resultSet) {
+            $sentenceElements = [];
+            foreach ($resultSet as $result) {
+                $sentenceElements[] = $this->hydrateElement($result);
+            }
+            $collection[] = $sentenceElements;
         }
 
-        return new TaggingResponse($data['input'], $elements, $data['time']);
+        return new TaggingResponse($data['input'], $collection, $data['time']);
     }
 
     /**
@@ -51,8 +57,8 @@ final class TaggingResponseDenormalizator implements DenormalizerInterface
             throw new UnexpectedResponseFormatException('The response\'s sentence item misses some fields.');
         }
 
-        $pos = PartOfSpeech;
+        $pos = ExtendedPartOfSpeech::createFromKey($result['partOfSpeech']);
 
-        return new Part($result['item'], $result['partOfSpeech']);
+        return new Part($result['item'], $pos);
     }
 }
