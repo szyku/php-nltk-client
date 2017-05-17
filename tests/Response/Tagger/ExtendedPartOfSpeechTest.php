@@ -19,7 +19,7 @@ class ExtendedPartOfSpeechTest extends \PHPUnit_Framework_TestCase
         $pos = ExtendedPartOfSpeech::createFromKey($symbol);
         $this->assertInstanceOf(ExtendedPartOfSpeech::class, $pos);
         $this->assertTrue($pos->is($expected));
-        $this->assertSame($pos->humanizedString(), $expectedDescription);
+        $this->assertSame($pos->humanizedToken(), $expectedDescription);
         $this->assertSame($pos->token(), $expectedSymbol);
     }
 

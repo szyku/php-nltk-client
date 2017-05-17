@@ -15,6 +15,11 @@ class TaggingRequestBuilder
     /** @var array */
     private $sentences = [];
 
+    public static function create()
+    {
+        return new self();
+    }
+
     public function add($sentence)
     {
         Assertion::string($sentence, 'Sentence must a string.');

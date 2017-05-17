@@ -177,7 +177,7 @@ class ExtendedPartOfSpeech extends Enum
         return $this->getValue();
     }
 
-    public function humanizedString()
+    public function humanizedToken()
     {
         return self::$map[$this->getValue()];
     }
