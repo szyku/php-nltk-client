@@ -15,7 +15,7 @@ use Szyku\NLTK\Exception\UnexpectedResponseFormatException;
 use Szyku\NLTK\Response\Dictionary\Definition;
 use Szyku\NLTK\Response\Dictionary\WordLookupResponse;
 
-class WordLookupResponseDenormalizer implements DenormalizerInterface
+final class WordLookupResponseDenormalizer implements DenormalizerInterface
 {
 
     /**

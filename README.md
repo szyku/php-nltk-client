@@ -53,9 +53,15 @@ How to query definitions with handy methods:
 use Szyku\NLTK\Request\Dictionary\DefinitionLookupRequest;
 use Szyku\NLTK\Request\Dictionary\SimilarLookupRequest;
 use Szyku\NLTK\Request\Lemma\LemmatizationRequestBuilder as Builder;
+use Szyku\NLTK\Request\Tagger\TaggingRequestBuilder as TaggerBuilder;
 
 $similarWordsToCastle = SimilarLookupRequest::noun('castle');
 $definitionsForRA = DefinitionLookupRequest::noun('rheumatoid arthritis');
+
+$sentenceTagging = TaggerBuilder::create()
+    ->add('He is a cunning man.')
+    ->addMany(['Before and after.', 'Ups and downs'])
+    ->build();
 
 $lemmatizeSentence = Builder::create()
     ->adjective('biggest')
@@ -69,6 +75,8 @@ $lemmatizeSentence = Builder::create()
 $castleResult = $nltkClient->dictionary($similarWordsToCastle);
 $raResult = $nltkClient->dictionary($definitionsForRA);
 $lemmatizationResult = $nltkClient->lemmatization($lemmatizeSentence);
+$taggingResult = $nltkClient->tagging($sentenceTagging);
+
 // easy to consume
 echo "Time taken in seconds: " . $castleResult->lookupTime();
 echo "Searched for: " . $castleResult->queriedPhrase();

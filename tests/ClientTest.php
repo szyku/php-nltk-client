@@ -17,19 +17,49 @@ use Szyku\NLTK\Client;
 use Szyku\NLTK\Request\Dictionary\DefinitionLookupRequest;
 use Szyku\NLTK\Request\Dictionary\SimilarLookupRequest;
 use Szyku\NLTK\Request\Lemma\LemmatizationRequestBuilder;
+use Szyku\NLTK\Request\Tagger\TaggingRequest;
 use Szyku\NLTK\Response\Dictionary\WordLookupResponse;
 use Szyku\NLTK\Response\Lemma\LemmatizationResponse;
+use Szyku\NLTK\Response\Tagger\ExtendedPartOfSpeech;
+use Szyku\NLTK\Response\Tagger\TaggingResponse;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
     const FILE_LEMMA = 'lemma_response';
     const FILE_LOOKUP = 'word_lookup_response';
+    const FILE_TAGGER = 'tagger_response';
 
     protected $history = [];
 
     protected function setUp()
     {
         $this->history = [];
+    }
+
+    public function testTaggerEndpoint()
+    {
+        $client = $this->createClient($this->happyPathDictionaryHandler(self::FILE_TAGGER));
+        $taggingReq = new TaggingRequest(["I yelled at him, but he didn't listen..."]);
+        $response = $client->tagging($taggingReq);
+
+        $this->assertInstanceOf(TaggingResponse::class, $response);
+
+        $this->assertSame('I yelled at him, but he didn\'t listen...', $response->input()[0]);
+        $segment = $response->parts()[0][0];
+        $this->assertSame('I', $segment->item());
+        $this->assertInstanceOf(ExtendedPartOfSpeech::class, $segment->partOfSpeech());
+        $this->assertTrue($segment->partOfSpeech()->is(ExtendedPartOfSpeech::PRO_PERSON()));
+
+        $this->assertCount(1, $this->history);
+
+        /** @var Request $madeRequest */
+        $madeRequest = $this->history[0]['request'];
+
+        $this->assertSame('POST', $madeRequest->getMethod());
+        $reqUri = $madeRequest->getUri();
+        $this->assertSame('localhost', $reqUri->getHost());
+        $this->assertSame(5000, $reqUri->getPort());
+        $this->assertSame('/tagger', $reqUri->getPath());
     }
 
     public function testDictionaryLookupForDefinition()
@@ -92,13 +122,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('application/json', $madeRequest->getHeaderLine('Content-Type'));
         $reqContent = $madeRequest->getBody()->getContents();
         $this->assertNotEmpty($reqContent);
-        $this->assertJsonStringEqualsJsonFile(__DIR__. '/data/expected_lemma_request_body.json', $reqContent);
+        $this->assertJsonStringEqualsJsonFile(__DIR__ . '/data/expected_lemma_request_body.json', $reqContent);
 
         $reqUri = $madeRequest->getUri();
         $this->assertSame('localhost', $reqUri->getHost());
         $this->assertSame(5000, $reqUri->getPort());
         $this->assertSame('/lemma', $reqUri->getPath());
     }
+
 
     private function happyPathDictionaryHandler($type = self::FILE_LOOKUP)
     {

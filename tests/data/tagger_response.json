@@ -1,0 +1,54 @@
+{
+  "input": [
+    "I yelled at him, but he didn't listen..."
+  ],
+  "results": [
+    [
+      {
+        "item": "I",
+        "partOfSpeech": "PRP"
+      },
+      {
+        "item": "yelled",
+        "partOfSpeech": "VBD"
+      },
+      {
+        "item": "at",
+        "partOfSpeech": "IN"
+      },
+      {
+        "item": "him",
+        "partOfSpeech": "PRP"
+      },
+      {
+        "item": ",",
+        "partOfSpeech": ","
+      },
+      {
+        "item": "but",
+        "partOfSpeech": "CC"
+      },
+      {
+        "item": "he",
+        "partOfSpeech": "PRP"
+      },
+      {
+        "item": "did",
+        "partOfSpeech": "VBD"
+      },
+      {
+        "item": "n't",
+        "partOfSpeech": "RB"
+      },
+      {
+        "item": "listen",
+        "partOfSpeech": "VB"
+      },
+      {
+        "item": "...",
+        "partOfSpeech": ":"
+      }
+    ]
+  ],
+  "time": 0.0009036064147949219
+}

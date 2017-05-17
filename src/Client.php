@@ -17,14 +17,18 @@ use Szyku\NLTK\Request\Dictionary\DefinitionLookupRequest;
 use Szyku\NLTK\Request\Dictionary\SimilarLookupRequest;
 use Szyku\NLTK\Request\Dictionary\WordLookupRequest;
 use Szyku\NLTK\Request\Lemma\LemmatizationRequest;
+use Szyku\NLTK\Request\Tagger\TaggingRequest;
 use Szyku\NLTK\Response\Dictionary\WordLookupResponse;
 use Szyku\NLTK\Response\Lemma\LemmatizationResponse;
+use Szyku\NLTK\Response\Tagger\TaggingResponse;
 use Szyku\NLTK\Serialization\JsonSerializer;
 use Szyku\NLTK\Util\PhraseNormalization;
 use function GuzzleHttp\Psr7\stream_for as Stream;
 
 class Client implements NltkClient
 {
+    const PATH_LEMMA = '/lemma';
+    const PATH_TAGGER = '/tagger';
     /** @var ClientInterface */
     private $httpClient;
 
@@ -63,15 +67,24 @@ class Client implements NltkClient
     public function lemmatization(LemmatizationRequest $request)
     {
         try {
-            /** @var StreamInterface $outputStream */
-            $outputStream = Stream($this->serializer->serialize($request));
-            $httpRequest = new Request('POST', '/lemma');
-            $httpRequest = $httpRequest
-                ->withHeader('Content-Type', 'application/json')
-                ->withBody($outputStream);
-            $response = $this->httpClient->send($httpRequest);
+            $response = $this->sendRequestToPath($request, self::PATH_LEMMA);
 
             return $this->serializer->deserialize($response->getBody()->getContents(), LemmatizationResponse::class);
+        } catch (\Exception $e) {
+            $this->throwServiceException($e);
+        }
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function tagging(TaggingRequest $request)
+    {
+        try {
+            $response = $this->sendRequestToPath($request, self::PATH_TAGGER);
+
+            return $this->serializer->deserialize($response->getBody()->getContents(), TaggingResponse::class);
         } catch (\Exception $e) {
             $this->throwServiceException($e);
         }
@@ -116,5 +129,18 @@ class Client implements NltkClient
         );
     }
 
+    /**
+     * @param TaggingRequest $request
+     */
+    private function sendRequestToPath($request, $path)
+    {
+        /** @var StreamInterface $outputStream */
+        $outputStream = Stream($this->serializer->serialize($request));
+        $httpRequest = new Request('POST', $path);
+        $httpRequest = $httpRequest
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($outputStream);
 
+        return $this->httpClient->send($httpRequest);
+    }
 }

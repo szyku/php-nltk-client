@@ -11,8 +11,10 @@ namespace Szyku\NLTK;
 use Szyku\NLTK\Exception\NltkClientServiceException;
 use Szyku\NLTK\Request\Dictionary\WordLookupRequest;
 use Szyku\NLTK\Request\Lemma\LemmatizationRequest;
+use Szyku\NLTK\Request\Tagger\TaggingRequest;
 use Szyku\NLTK\Response\Dictionary\WordLookupResponse;
 use Szyku\NLTK\Response\Lemma\LemmatizationResponse;
+use Szyku\NLTK\Response\Tagger\TaggingResponse;
 
 interface NltkClient
 {
@@ -34,4 +36,12 @@ interface NltkClient
      * @throws NltkClientServiceException If anything goes wrong.
      */
     public function lemmatization(LemmatizationRequest $request);
+
+    /**
+     * Issues a request to the API to tag the passed sentences with parts of speech.
+     * @param TaggingRequest $request
+     * @return TaggingResponse
+     * @throws NltkClientServiceException If anything goes wrong.
+     */
+    public function tagging(TaggingRequest $request);
 }
